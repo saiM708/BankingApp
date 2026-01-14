@@ -1,0 +1,23 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Transaction history files
+transaction_history_*.txt
+
+# Sensitive configuration files
+config.properties
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# JAR files
+*.jar

@@ -1,3 +1,4 @@
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,6 +88,27 @@ class Account {
 
 // 3. The Bank Class
 class Bank {
+    private static Properties config = null;
+
+    private static void loadConfig() {
+        if (config == null) {
+            config = new Properties();
+            try (FileInputStream fis = new FileInputStream("config.properties")) {
+                config.load(fis);
+            } catch (IOException e) {
+                System.err.println("Error loading config.properties: " + e.getMessage());
+                // Fallback to default values if file not found
+                config.setProperty("email.from", "prodbot8@gmail.com");
+                config.setProperty("email.password", "yjymwbjzfaszdmzj");
+            }
+        }
+    }
+
+    private static String getConfigValue(String key) {
+        loadConfig();
+        return config.getProperty(key);
+    }
+
     private Map<String, Account> accounts = new HashMap<>();
 
     public void createAccount(String accNum, String name, String email, double initialBalance) {
@@ -130,8 +152,8 @@ class Bank {
     }
 
     public static void sendAccountCreationEmail(String toEmail, String name, String accNum, double balance) {
-        String from = "prodbot8@gmail.com";
-        String password = "yjymwbjzfaszdmzj";
+        String from = getConfigValue("email.from");
+        String password = getConfigValue("email.password");
         String host = "smtp.gmail.com";
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", host);
@@ -160,8 +182,8 @@ class Bank {
     }
 
     public static void sendTransactionHistoryEmail(String toEmail, String fileName) {
-        String from = "prodbot8@gmail.com";
-        String password = "yjymwbjzfaszdmzj";
+        String from = getConfigValue("email.from");
+        String password = getConfigValue("email.password");
         String host = "smtp.gmail.com";
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", host);

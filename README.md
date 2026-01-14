@@ -24,6 +24,7 @@ A Java-based banking system with both console and graphical user interface (GUI)
 2. ✅ Ensure the following JAR files are present in the project directory:
    - `mail.jar` (JavaMail API)
    - `activation.jar` (JavaBeans Activation Framework)
+3. ⚙️ Create a `config.properties` file in the project root with your email credentials (see Email Configuration below)
 
 ## 🔨 Compilation
 
@@ -68,9 +69,10 @@ This will launch the GUI interface. The application provides buttons for all ban
 
 - `BankingSystem.java`: Main application class that launches the GUI
 - `BankingGUI.java`: Graphical user interface implementation
-- `Bank.class`: Bank class handling account management and operations
-- `Account.class`: Account class managing individual account data
-- `InsufficientFundsException.class`: Custom exception for insufficient funds
+- `Bank.java`: Bank class handling account management and operations
+- `Account.java`: Account class managing individual account data
+- `InsufficientFundsException.java`: Custom exception for insufficient funds
+- `config.properties`: Configuration file for email credentials (gitignored for security)
 - `mail.jar`: JavaMail API library
 - `activation.jar`: JavaBeans Activation Framework library
 
@@ -117,4 +119,3 @@ This project is for educational purposes. Modify and distribute as needed.
 ## 🤝 Contributing
 
 Feel free to contribute improvements, bug fixes, or additional features to the banking system.
-
