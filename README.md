@@ -68,9 +68,9 @@ This will launch the GUI interface. The application provides buttons for all ban
 
 - `BankingSystem.java`: Main application class that launches the GUI
 - `BankingGUI.java`: Graphical user interface implementation
-- `Bank.java`: Bank class handling account management and operations
-- `Account.java`: Account class managing individual account data
-- `InsufficientFundsException.java`: Custom exception for insufficient funds
+- `Bank.class`: Bank class handling account management and operations
+- `Account.class`: Account class managing individual account data
+- `InsufficientFundsException.class`: Custom exception for insufficient funds
 - `mail.jar`: JavaMail API library
 - `activation.jar`: JavaBeans Activation Framework library
 
@@ -117,3 +117,4 @@ This project is for educational purposes. Modify and distribute as needed.
 ## 🤝 Contributing
 
 Feel free to contribute improvements, bug fixes, or additional features to the banking system.
+
