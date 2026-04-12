@@ -1,23 +1,11 @@
-# Compiled class files
-*.class
-
-# Log files
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/static
+!**/src/main/**/templates
 *.log
-
-# Transaction history files
-transaction_history_*.txt
-
-# Sensitive configuration files
-config.properties
-
-# IDE files
-.vscode/
+.DS_Store
 .idea/
 *.iml
+.vscode/
+.env
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# JAR files
-*.jar

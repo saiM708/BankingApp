@@ -1,121 +1,97 @@
-# 🏦 Banking System Project
+# 🏦 BankApp - Advanced Banking System ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-green.svg?style=flat&logo=spring-boot) [![Maven](https://img.shields.io/badge/Maven-3.6%2B-orange.svg)](https://maven.apache.org/) ![Java](https://img.shields.io/badge/Java-24-blue.svg?style=flat&logo=java)
 
-A Java-based banking system with both console and graphical user interface (GUI) support. The system allows users to perform various banking operations such as creating accounts, depositing/withdrawing funds, transferring money, and viewing transaction history.
+[![GitHub stars](https://img.shields.io/badge/GitHub-Repo-blue.svg)](https://github.com/yourusername/bankapp)
 
-## ✨ Features
+**Secure, production-ready Spring Boot banking app** with REST APIs, Thymeleaf UI, email notifications (env vars), balance alerts, transaction logging.
 
-- **👤 Account Management**: Create, delete, and manage bank accounts
-- **💰 Fund Operations**: Deposit and withdraw money with balance validation
-- **🔄 Money Transfer**: Transfer funds between accounts with minimum balance checks
-- **📜 Transaction History**: View and save transaction history to file
-- **📧 Email Notifications**: Automatic email notifications for account creation and transaction history
-- **🖥️ GUI Interface**: User-friendly graphical interface using Java Swing
-- **💻 Console Output**: Transaction history displayed in console for logging
+## 📋 Table of Contents
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Quick Start](#quick-start)
+- [Environment Variables](#environment-variables)
+- [Run in IntelliJ](#run-in-intellij)
+- [Architecture](#architecture)
+- [API Endpoints](#api-endpoints)
+- [Troubleshooting](#troubleshooting)
+- [Deployment](#deployment)
 
-## 📋 Prerequisites
+## 🚀 Features
+- Account mgmt (Savings/Checking, $100 min)
+- Transactions (deposit/withdraw/transfer)
+- History with balance snapshots
+- Email welcome/low-balance alerts
+- Web UI (login/signup/dashboard/history)
+- H2 DB, logging
 
-- ☕ Java Development Kit (JDK) 8 or higher
-- 📬 JavaMail API (javax.mail) - included as mail.jar
-- 📦 JavaBeans Activation Framework (JAF) - included as activation.jar
+## 📸 Screenshots
+![Login](./images/login.png)
+![Registration](./images/registration.png)
+![Dashboard](./images/bank_dashboard.png)
+![History](./images/transaction_history.png)
 
-## 🚀 Installation
-
-1. 📥 Clone or download the project files
-2. ✅ Ensure the following JAR files are present in the project directory:
-   - `mail.jar` (JavaMail API)
-   - `activation.jar` (JavaBeans Activation Framework)
-3. ⚙️ Create a `config.properties` file in the project root with your email credentials (see Email Configuration below)
-
-## 🔨 Compilation
-
-Compile the Java files with the required dependencies:
-
+## ⚡ Quick Start (Terminal)
 ```bash
-javac -cp mail.jar;activation.jar BankingSystem.java BankingGUI.java
+cp .env.example .env  # Edit with Gmail app pass
+mvn clean install
+mvn spring-boot:run
 ```
 
-## ▶️ Running the Application
-
-Run the application using:
-
-```bash
-java -cp .;mail.jar;activation.jar BankingSystem
+## 🌍 Environment Variables
+`.env.example` template (copy to `.env`):
+```
+MAIL_USERNAME=prodbot8@gmail.com
+MAIL_PASSWORD=yjymwbjzfaszdmzj  # Your app pass
 ```
 
-This will launch the GUI interface. The application provides buttons for all banking operations.
+**Windows Terminal:**
+```
+set MAIL_USERNAME=prodbot8@gmail.com
+set MAIL_PASSWORD=yjymwbjzfaszdmzj
+mvn spring-boot:run
+```
 
-## 📖 Usage
+**Linux/Mac:**
+```
+export MAIL_USERNAME=prodbot8@gmail.com
+export MAIL_PASSWORD=yjymwbjzfaszdmzj
+mvn spring-boot:run
+```
 
-### 🖱️ GUI Operations
+## 💻 Run in IntelliJ
+1. Open project in IntelliJ.
+2. Edit **Run Configuration** (Run > Edit Configurations):
+   - Main class: `com.example.bankapp.BankAppApplication`
+   - **Environment variables**: `MAIL_USERNAME=prodbot8@gmail.com;MAIL_PASSWORD=yjymwbjzfaszdmzj`
+3. Run/Debug (Shift+F10).
 
-1. **➕ Create Account**: Enter account number, holder name, email, and initial balance
-2. **💸 Deposit Funds**: Enter account number and deposit amount
-3. **💳 Withdraw Funds**: Enter account number and withdrawal amount (minimum balance of $100 must be maintained)
-4. **🔄 Transfer Funds**: Enter source account, destination account, and transfer amount
-5. **📊 Check Balance**: Enter account number to view current balance
-6. **📜 Transaction History**: Enter account number to view and save transaction history (displayed in console and dialog)
-7. **🗑️ Delete Account**: Enter account number to delete the account
-8. **🚪 Exit**: Close the application
+**VM options** (if needed): `-Dspring.profiles.active=dev`
 
-### ⚖️ Business Rules
+App starts at http://localhost:8080
 
-- 💵 Minimum balance of $100 must be maintained in accounts
-- 🚫 Withdrawal amounts cannot exceed available balance
-- ➕ Transfer amounts must be positive
-- 🔍 All operations validate account existence
-- 📧 Email notifications are sent for account creation and transaction history
+## 🏗️ Architecture
+```mermaid
+graph TD
+    Controller --> Service --> Repo --> H2
+    Service --> Email & Log
+```
 
-## 📁 File Structure
+## 📊 API Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/accounts | Create account |
+| POST | /api/accounts/{id}/deposit | Deposit |
+| POST | /api/accounts/{id}/withdraw | Withdraw |
+| POST | /api/accounts/transfer | Transfer |
+| GET | /api/accounts/{id}/history | History |
 
-- `BankingSystem.java`: Main application class that launches the GUI
-- `BankingGUI.java`: Graphical user interface implementation
-- `Bank.java`: Bank class handling account management and operations
-- `Account.java`: Account class managing individual account data
-- `InsufficientFundsException.java`: Custom exception for insufficient funds
-- `config.properties`: Configuration file for email credentials (gitignored for security)
-- `mail.jar`: JavaMail API library
-- `activation.jar`: JavaBeans Activation Framework library
+## ❓ Troubleshooting
+- **Email auth failed**: Set MAIL_* env vars in IntelliJ Run Config.
+- **H2**: /h2-console (jdbc:h2:mem:bankdb)
+- Logs: `transactions.log`
 
-## 📧 Email Configuration
-
-The system is configured to send emails using Gmail SMTP. To use email functionality:
-
-1. ⚙️ Update the email credentials in `Bank.java`:
-   - `from`: Sender email address
-   - `password`: App password (not regular password)
-
-2. 🔐 Ensure the sender email has "Less secure app access" enabled or uses an app password.
-
-## 📦 Dependencies
-
-- **📬 JavaMail API**: For sending emails
-- **📦 JavaBeans Activation Framework**: Required for email attachments
-
-## ⚠️ Error Handling
-
-The application includes comprehensive error handling for:
-- ❌ Invalid input amounts
-- 💸 Insufficient funds
-- 🔍 Non-existent accounts
-- 📧 Email sending failures
-
-## 💻 Console Output
-
-- 📜 Transaction history is displayed in the console when viewed through the GUI
-- 📧 Email sending confirmations are logged to console
-- 🔍 Operation results are printed for debugging
-
-## 💡 Development Notes
-
-- 🖥️ The system uses Java Swing for the GUI
-- 🌐 Email functionality requires internet connection and valid SMTP credentials
-- 📄 Transaction history is saved as text files in the project directory
-- 💵 All monetary values are handled as doubles
+## 🚀 Deployment
+Docker/Heroku with env vars.
 
 ## 📄 License
+MIT
 
-This project is for educational purposes. Modify and distribute as needed.
-
-## 🤝 Contributing
-
-Feel free to contribute improvements, bug fixes, or additional features to the banking system.
