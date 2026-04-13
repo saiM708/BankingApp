@@ -1,0 +1,88 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* --- Main Card Container --- */
+.container {
+    width: 100%;
+    max-width: 500px; /* Keeps the form looking neat, not too wide */
+    margin-top: 50px;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h2 { color: #333; margin-bottom: 20px; }
+
+/* --- VERTICAL STACKING MAGIC --- */
+/* This forces Inputs, Selects, Buttons, and Links to be stacked */
+input, select, button, .btn-secondary {
+    display: block;       /* Forces new line */
+    width: 100%;          /* Forces full width */
+    padding: 12px 15px;
+    margin-bottom: 15px;  /* Space between items */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: white;
+}
+
+input:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* --- Buttons --- */
+button {
+    background-color: #28a745; /* Green */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover { opacity: 0.9; }
+
+/* Secondary Button (Back to Login) */
+.btn-secondary {
+    background-color: #6c757d; /* Grey */
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+}
+
+.btn-secondary:hover { background-color: #5a6268; }
+
+/* --- Dashboard Specifics --- */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    text-align: left;
+}
+
+.btn-logout {
+    color: red;
+    text-decoration: none;
+    font-weight: bold;
+    float: right;
+    font-size: 14px;
+    display: inline;
+    width: auto;
+    border: none;
+    background: none;
+}

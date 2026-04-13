@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px; /* Narrow card for vertical look */
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h2 { color: #333; margin-bottom: 20px; }
+
+        /* FORCE VERTICAL STACKING */
+        input, select, button, .btn-secondary {
+            display: block;       /* Forces new line */
+            width: 100%;          /* Full width */
+            padding: 12px;
+            margin-bottom: 15px;  /* Space between items */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { opacity: 0.9; }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border: none;
+        }
+        .btn-secondary:hover { background-color: #5a6268; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2>📝 Create New Account</h2>
+        <form action="/signup" method="post">
+
+            <input type="text" name="holderName" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="number" name="balance" placeholder="Initial Deposit" required>
+
+            <select name="type" required>
+                <option value="" disabled selected>Select Account Type</option>
+                <option value="Savings">Savings Account</option>
+                <option value="Current">Current Account</option>
+            </select>
+
+            <p style="color:red" th:if="${error}" th:text="${error}"></p>
+
+            <button type="submit">Sign Up</button>
+            <a href="/" class="btn-secondary">Back to Login</a>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
