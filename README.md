@@ -37,34 +37,26 @@ mvn spring-boot:run
 ```
 
 ## 🌍 Environment Variables
-`.env.example` template (copy to `.env`):
+`.env template (copy to `.env`):
 ```
-MAIL_USERNAME=prodbot8@gmail.com
-MAIL_PASSWORD=yjymwbjzfaszdmzj  # Your app pass
+MAIL_USERNAME=xyz@gmail.com  #your email id
+MAIL_PASSWORD=****************  # Your app pass
 ```
 
 **Windows Terminal:**
 ```
-set MAIL_USERNAME=prodbot8@gmail.com
-set MAIL_PASSWORD=yjymwbjzfaszdmzj
+set MAIL_USERNAME=xyz@gmail.com
+set MAIL_PASSWORD=****************
 mvn spring-boot:run
 ```
 
 **Linux/Mac:**
 ```
-export MAIL_USERNAME=prodbot8@gmail.com
-export MAIL_PASSWORD=yjymwbjzfaszdmzj
+export MAIL_USERNAME=xyz@gmail.com
+export MAIL_PASSWORD=****************
 mvn spring-boot:run
 ```
 
-## 💻 Run in IntelliJ
-1. Open project in IntelliJ.
-2. Edit **Run Configuration** (Run > Edit Configurations):
-   - Main class: `com.example.bankapp.BankAppApplication`
-   - **Environment variables**: `MAIL_USERNAME=prodbot8@gmail.com;MAIL_PASSWORD=yjymwbjzfaszdmzj`
-3. Run/Debug (Shift+F10).
-
-**VM options** (if needed): `-Dspring.profiles.active=dev`
 
 App starts at http://localhost:8080
 
@@ -88,9 +80,59 @@ graph TD
 - **Email auth failed**: Set MAIL_* env vars in IntelliJ Run Config.
 - **H2**: /h2-console (jdbc:h2:mem:bankdb)
 - Logs: `transactions.log`
+```mermaid
+graph TD
+    A[Web UI / REST API<br/>BankWebController] --> B[Services<br/>AccountService<br/>BalanceMonitorService<br/>EmailNotificationService]
+    B --> C[Repositories<br/>AccountRepository<br/>TransactionRepository]
+    C --> D[H2 Database]
+    B --> E[TransactionLogger<br/>transactions.log]
+    B --> F[Email SMTP]
+    style A fill:#f9f,stroke:#333
+    style D fill:#bbf,stroke:#333
+```
+**Layers**: MVC pattern with service layer for business logic, JPA repos for persistence.
 
-## 🚀 Deployment
-Docker/Heroku with env vars.
+## 📊 API Endpoints
+
+| Method | Endpoint | Description | Parameters | Response | Status |
+|--------|----------|-------------|------------|----------|--------|
+| GET | `/api/accounts` | List all accounts | - | JSON Account[] | 200 |
+| POST | `/api/accounts` | Create account | `{name, email, balance(≥100), type}` | JSON Account | 201 |
+| POST | `/api/accounts/{id}/deposit` | Deposit | `amount, source(opt)` | JSON Account | 200 |
+| POST | `/api/accounts/{id}/withdraw` | Withdraw | `amount, source(opt)` | JSON Account or 400 (InsufficientFunds) | 200/400 |
+| POST | `/api/accounts/transfer` | Transfer | `fromId, toId, amount` | JSON success msg | 200 |
+| GET | `/api/accounts/{id}/history` | History | - | JSON Transaction[] | 200 |
+
+
+## ⚙️ Advanced Features
+<details>
+<summary>Click to expand</summary>
+
+### Email Notifications
+- Uses `spring-boot-starter-mail` with Gmail SMTP (env vars).
+- Welcome email on signup.
+- Low-balance alert (<$100) via `BalanceMonitorService` – flags `lowBalanceAlertSent` to prevent spam.
+
+### Transaction Logging
+- `TransactionLogger` appends to `transactions.log`: format `[TIMESTAMP] [TYPE] [AMOUNT] [BALANCE] [SOURCE]`.
+- Example: `2024-01-01 12:00 Deposit 500.0 1500.0 Self Deposit`.
+
+### Error Handling
+- `InsufficientFundsException`: Custom exception → 400 Bad Request JSON.
+
+### Balance Monitor
+- Post-transaction check; email if below threshold.
+
+</details>
+
+
+## 🛣️ Roadmap
+- JWT auth
+- Prod DB (PostgreSQL)
+- Tests
+
+## 🤝 Contributing
+Fork > Branch > PR
 
 ## 📄 License
 MIT
