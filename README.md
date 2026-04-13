@@ -1,4 +1,5 @@
-# 🏦 BankApp - Advanced Banking System ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-green.svg?style=flat&logo=spring-boot) [![Maven](https://img.shields.io/badge/Maven-3.6%2B-orange.svg)](https://maven.apache.org/) ![Java](https://img.shields.io/badge/Java-24-blue.svg?style=flat&logo=java)
+# 🏦 BankApp - Advanced Banking System
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-green.svg?style=flat&logo=spring-boot) [![Maven](https://img.shields.io/badge/Maven-3.6%2B-orange.svg)](https://maven.apache.org/) ![Java](https://img.shields.io/badge/Java-24-blue.svg?style=flat&logo=java)
 
 [![GitHub stars](https://img.shields.io/badge/GitHub-Repo-blue.svg)](https://github.com/yourusername/bankapp)
 
