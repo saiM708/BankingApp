@@ -13,7 +13,6 @@
 - [Architecture](#architecture)
 - [API Endpoints](#api-endpoints)
 - [Troubleshooting](#troubleshooting)
-- [Deployment](#deployment)
 
 ## 🚀 Features
 - Account mgmt (Savings/Checking, $100 min)
